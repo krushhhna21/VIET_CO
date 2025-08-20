@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIET - Computer Department</title>
+    <style>
+        /* ===== Global Styles ===== */
+        :root {
+            --primary: #0F0F1A;
+            --secondary: #0066CC;
+            --accent: #00FF9D;
+            --text-light: #F5F5F7;
+            --text-dark: #1A1A1A;
+            --glass: rgba(255, 255, 255, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        /* ===== Header/Navigation ===== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            background: var(--glass);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            height: 80px;
+            filter: brightness(2) invert(0);
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* ===== Hero Section ===== */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center/cover;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: var(--text-dark);
+            border: 2px solid var(--accent);
+        }
+        
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--text-light);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--text-light);
+            color: var(--primary);
+        }
+        
+        /* ===== Year Sections ===== */
+        .years {
+            padding: 8rem 10% 5rem;
+            background: var(--primary);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background: var(--accent);
+        }
+        
+        .year-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .year-tab {
+            padding: 0.8rem 1.5rem;
+            background: var(--glass);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        
+        .year-tab.active {
+            background: var(--accent);
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        
+        .year-tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+       .year-content {
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.year-content.active {
+    display: grid;
+    animation: fadeIn 0.5s ease;
+}
+        
+        .subject-card {
+            background: var(--glass);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subject-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subject-card p {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .subject-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .subject-link {
+            padding: 0.5rem 1rem;
+            background: rgba(0, 102, 204, 0.2);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+        
+        .subject-link:hover {
+            background: var(--secondary);
+        }
+        
+        /* ===== Faculty Section ===== */
+        .faculty {
+            padding: 5rem 10%;
+            background: #0A0A12;
+        }
+        
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .faculty-card {
+            background: var(--glass);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            perspective: 1000px;
+            height: 350px;
+        }
+        
+        .faculty-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .faculty-card:hover .faculty-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .faculty-card-front, .faculty-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            padding: 1.5rem;
+        }
+        
+        .faculty-card-front {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .faculty-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 3px solid var(--accent);
+        }
+        
+        .faculty-card-back {
+            background: rgba(0, 102, 204, 0.1);
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .faculty-card-back h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .faculty-specialty {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .faculty-research {
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+        
+        .faculty-contact {
+            margin-top: auto;
+            padding: 0.8rem;
+            background: var(--secondary);
+            border-radius: 6px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+        }
+        
+        /* ===== Notes Section ===== */
+        .notes {
+            padding: 5rem 10%;
+            background: var(--primary);
+        }
+        
+        .search-bar {
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+        /* Semester tabs specific styles */
+.year-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.year-tab {
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.year-tab.active {
+    font-weight: bold;
+    /* Add your active tab styling here */
+}
+
+.year-content {
+    display: none;
+}
+
+.year-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .note-card {
+            background: var(--glass);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .note-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .note-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .note-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 1rem;
+        }
+        
+        .note-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .note-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .note-download {
+            background: var(--accent);
+            color: var(--text-dark);
+        }
+        
+        .note-download:hover {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+        
+        .note-view {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--text-light);
+        }
+        
+        .note-view:hover {
+            background: var(--text-light);
+            color: var(--primary);
+        }
+        
+        /* ===== Footer ===== */
+        footer {
+            background: #050508;
+            padding: 3rem 10%;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+        
+        .copyright {
+            opacity: 0.5;
+            font-size: 0.9rem;
+        }
+        
+        /* ===== Animations ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .year-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .faculty-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+        }
+    </style>
+    <!-- Inter Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header>
+        <img src="logo.png" alt="VIET Logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#years">Academics</a></li>
+                <li><a href="#faculty">Faculty</a></li>
+                <li><a href="#notes">Notes</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Where Algorithms Meet Innovation</h1>
+            <p>The premier computer science department at Vishweshwarayya Institute of Engineering & Technology, shaping the technologists of tomorrow.</p>
+            <div class="cta-buttons">
+                <button class="btn btn-primary" id="exploreBtn">Explore Programs</button>
+                <button class="btn btn-secondary" id="facultyBtn">Meet Our Faculty</button>
+            </div>
+        </div>
+    </section>
+
+  <section class="years" id="years">
+    <h2 class="section-title">Academic Programs (Semester-wise)</h2>
+    
+    <div class="year-tabs">
+        <button class="year-tab active" onclick="showSemester('sem1')">Semester 1</button>
+        <button class="year-tab" onclick="showSemester('sem2')">Semester 2</button>
+        <button class="year-tab" onclick="showSemester('sem3')">Semester 3</button>
+        <button class="year-tab" onclick="showSemester('sem4')">Semester 4</button>
+        <button class="year-tab" onclick="showSemester('sem5')">Semester 5</button>
+        <button class="year-tab" onclick="showSemester('sem6')">Semester 6</button>
+    </div>
+    
+    <!-- Semester 1 Content -->
+    <div class="year-content active" id="sem1">
+        <div class="subject-card">
+            <h3>Basic Mathematics</h3>
+            <p>Fundamental mathematical concepts for engineering</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/16QE307WzTskQ7ezmAyJQndBal9f-ZAQ9/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Basic Science</h3>
+            <p>Physics and chemistry fundamentals</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1DTZ1vm3pMuB7e5EFYasybd2FCmua7dq9/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Communication Skills (English)</h3>
+            <p>Technical communication and professional English</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1XC_cdmq-yhw2Sc6auM3mxkkYm04JVuCQ/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Engineering Graphics</h3>
+            <p>Technical drawing and CAD fundamentals</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1fBiycdbe-TxWp9mre4AquXQqhpx8C3oh/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Fundamentals of ICT</h3>
+            <p>Information and Communication Technology basics</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1NrbT1R4F1KRauXuR2ZPBa6W5XqWZlfUc/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Yoga and Meditation</h3>
+            <p>Health and wellness practices</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1TgOglO7tSpD76QXp8cQPEgervaJ5FpTf/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Computer Engineering Workshop</h3>
+            <p>Practical hardware and software basics</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1sx-qo8a4CnSCABdbXAcMSmnHCRMrwjsU/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Semester 2 Content -->
+    <div class="year-content" id="sem2">
+        <div class="subject-card">
+            <h3>Applied Mathematics</h3>
+            <p>Advanced mathematical concepts for engineering applications</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1Go_w0Na3JLAjyioslbV1_bVRN2g_mteR/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Programming in C</h3>
+            <p>Structured programming using C language</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1H8vSozxYnL6Th4hCOiap07-of3muPXxw/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Linux Basics</h3>
+            <p>Introduction to Linux operating system</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1UFk15R8EceBvOpp0FoIYH92KQTHuxBLa/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Web Page Designing</h3>
+            <p>HTML, CSS and basic web development</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1CjPYYrp_Xs4_mSYP_C-wwpp2VbGP4slO/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Professional Communication</h3>
+            <p>Advanced communication skills for workplace</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1W98akrggvmgpQ70qdA8WbdOWtuBN_QhV/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Social and Life Skills</h3>
+            <p>Personal and professional development</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1j60-yrvBfJppXbjtajzXQw735yX292mL/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Basic Electrical and Electronics Engineering</h3>
+            <p>Fundamentals of electrical circuits and components</p>
+            <div class="subject-links">
+                <a href="https://drive.google.com/file/d/1lcVo5UtaMzLyon_jUz5id25tl1kLzPRm/view" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Semester 3 Content -->
+    <div class="year-content" id="sem3">
+        <div class="subject-card">
+            <h3>Data Structure Using C</h3>
+            <p>Implementation of data structures in C</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Database Management System</h3>
+            <p>Relational databases and SQL</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Digital Techniques</h3>
+            <p>Digital logic and circuit design</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Object Oriented Programming Using C++</h3>
+            <p>OOP concepts and C++ implementation</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Computer Graphics</h3>
+            <p>Fundamentals of 2D and 3D graphics</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Essence of Indian Constitution</h3>
+            <p>Indian polity and constitutional values</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Semester 4 Content -->
+    <div class="year-content" id="sem4">
+        <div class="subject-card">
+            <h3>Java Programming</h3>
+            <p>Core Java and application development</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Software Engineering</h3>
+            <p>SDLC and software development methodologies</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Data Communication and Computer Network</h3>
+            <p>Network protocols and communication technologies</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Microprocessors</h3>
+            <p>Architecture and programming of microprocessors</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Environmental Education and Sustainability (EES)</h3>
+            <p>Environmental awareness and sustainable practices</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Semester 5 Content -->
+    <div class="year-content" id="sem5">
+        <div class="subject-card">
+            <h3>Environmental Studies</h3>
+            <p>Environmental science and conservation</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Operating System</h3>
+            <p>Process management and memory allocation</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Advanced Java Programming</h3>
+            <p>Enterprise Java and advanced concepts</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Software Testing</h3>
+            <p>Testing methodologies and quality assurance</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Capstone Project - Planning</h3>
+            <p>Project planning and documentation</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Guidelines</a>
+                <a href="#" class="subject-link">Templates</a>
+                <a href="#" class="subject-link">Examples</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Advanced Computer Network</h3>
+            <p>Advanced networking concepts</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Client Side Scripting Language</h3>
+            <p>JavaScript and front-end technologies</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Semester 6 Content -->
+    <div class="year-content" id="sem6">
+        <div class="subject-card">
+            <h3>Entrepreneurship Development</h3>
+            <p>Startup concepts and business planning</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Capstone Project Execution</h3>
+            <p>Implementation and presentation of final project</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Guidelines</a>
+                <a href="#" class="subject-link">Resources</a>
+                <a href="#" class="subject-link">Examples</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Programming with Python</h3>
+            <p>Python programming and applications</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Mobile Application Development</h3>
+            <p>Android/iOS app development</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Emerging Trends in Computer Engg.</h3>
+            <p>Latest technologies in computer field</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Web Based Application Development with PHP</h3>
+            <p>Server-side scripting with PHP</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+        
+        <div class="subject-card">
+            <h3>Network and Information Security</h3>
+            <p>Cybersecurity fundamentals</p>
+            <div class="subject-links">
+                <a href="#" class="subject-link">Syllabus</a>
+                <a href="#" class="subject-link">Notes</a>
+                <a href="#" class="subject-link">Videos</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Faculty Section -->
+    <section class="faculty" id="faculty">
+        <h2 class="section-title">Our Faculty</h2>
+        
+        <div class="faculty-grid">
+            <!-- Faculty Card 1 -->
+            <div class="faculty-card">
+                <div class="faculty-card-inner">
+                    <div class="faculty-card-front">
+                        <img src="https://thispersondoesnotexist.com/" alt="Faculty" class="faculty-img">
+                        <h3>Dr. Sanjay Patil</h3>
+                        <p>Professor</p>
+                    </div>
+                    <div class="faculty-card-back">
+                        <h3>Dr. Sanjay Patil</h3>
+                        <p class="faculty-specialty">Artificial Intelligence</p>
+                        <p class="faculty-research">Specializing in neural networks and deep learning applications in healthcare.</p>
+                        <a href="mailto:sanjay.patil@viet.edu" class="faculty-contact">Contact</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Faculty Card 2 -->
+            <div class="faculty-card">
+                <div class="faculty-card-inner">
+                    <div class="faculty-card-front">
+                        <img src="https://thispersondoesnotexist.com/" alt="Faculty" class="faculty-img">
+                        <h3>Prof. Meena Sharma</h3>
+                        <p>Associate Professor</p>
+                    </div>
+                    <div class="faculty-card-back">
+                        <h3>Prof. Meena Sharma</h3>
+                        <p class="faculty-specialty">Cybersecurity</p>
+                        <p class="faculty-research">Research in network security and cryptographic protocols.</p>
+                        <a href="mailto:meena.sharma@viet.edu" class="faculty-contact">Contact</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Faculty Card 3 -->
+            <div class="faculty-card">
+                <div class="faculty-card-inner">
+                    <div class="faculty-card-front">
+                        <img src="https://thispersondoesnotexist.com/" alt="Faculty" class="faculty-img">
+                        <h3>Dr. Rajesh Kumar</h3>
+                        <p>Professor</p>
+                    </div>
+                    <div class="faculty-card-back">
+                        <h3>Dr. Rajesh Kumar</h3>
+                        <p class="faculty-specialty">Data Science</p>
+                        <p class="faculty-research">Big data analytics and machine learning applications.</p>
+                        <a href="mailto:rajesh.kumar@viet.edu" class="faculty-contact">Contact</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Faculty Card 4 -->
+            <div class="faculty-card">
+                <div class="faculty-card-inner">
+                    <div class="faculty-card-front">
+                        <img src="https://thispersondoesnotexist.com/" alt="Faculty" class="faculty-img">
+                        <h3>Prof. Anjali Deshpande</h3>
+                        <p>Assistant Professor</p>
+                    </div>
+                    <div class="faculty-card-back">
+                        <h3>Prof. Anjali Deshpande</h3>
+                        <p class="faculty-specialty">Cloud Computing</p>
+                        <p class="faculty-research">Distributed systems and edge computing architectures.</p>
+                        <a href="mailto:anjali.deshpande@viet.edu" class="faculty-contact">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notes Section -->
+    <section class="notes" id="notes">
+        <h2 class="section-title">Study Resources</h2>
+        
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search notes by subject, year or professor...">
+            <button class="btn btn-primary">Search</button>
+        </div>
+        
+        <div class="notes-grid">
+            <div class="note-card">
+                <h3>Data Structures Algorithms</h3>
+                <div class="note-meta">
+                    <span>Year: 2</span>
+                    <span>Prof. Sharma</span>
+                </div>
+                <p>Complete notes with code examples and complexity analysis</p>
+                <div class="note-actions">
+                    <a href="#" class="note-btn note-download">Download PDF</a>
+                    <a href="#" class="note-btn note-view">View Online</a>
+                </div>
+            </div>
+            
+            <div class="note-card">
+                <h3>Database Normalization</h3>
+                <div class="note-meta">
+                    <span>Year: 3</span>
+                    <span>Dr. Kumar</span>
+                </div>
+                <p>Normal forms with practical examples and exercises</p>
+                <div class="note-actions">
+                    <a href="#" class="note-btn note-download">Download PDF</a>
+                    <a href="#" class="note-btn note-view">View Online</a>
+                </div>
+            </div>
+            
+            <div class="note-card">
+                <h3>Machine Learning Basics</h3>
+                <div class="note-meta">
+                    <span>Year: 4</span>
+                    <span>Dr. Patil</span>
+                </div>
+                <p>Supervised vs unsupervised learning with Python code</p>
+                <div class="note-actions">
+                    <a href="#" class="note-btn note-download">Download PDF</a>
+                    <a href="#" class="note-btn note-view">View Online</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <img src="logo.png" alt="VIET Logo" class="footer-logo">
+        <div class="footer-links">
+            <a href="#">About</a>
+            <a href="#">Academics</a>
+            <a href="#">Research</a>
+            <a href="#">Placements</a>
+            <a href="#">Contact</a>
+        </div>
+        <p class="copyright">© 2024 VIET Computer Department. All Rights Reserved.</p>
+        <p>Almala, Tq. Ausa, Dist. Latur-418520, Maharashtra</p>
+    </footer>
+
+<script>
+// Replace ALL the existing JavaScript with this single, clean implementation:
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Semester Tab Functionality
+    function showSemester(semesterId) {
+        // Remove active class from all tabs and contents
+        document.querySelectorAll('.year-tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.querySelectorAll('.year-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        // Add active class to clicked tab and corresponding content
+        const activeTab = document.querySelector(`.year-tab[onclick*="${semesterId}"]`);
+        if (activeTab) activeTab.classList.add('active');
+        document.getElementById(semesterId).classList.add('active');
+    }
+
+    // Initialize first tab as active
+    showSemester('sem1');
+
+    // Navigation Smooth Scrolling
+    document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        });
+    });
+    
+    // CTA Button Functionality
+    document.getElementById('exploreBtn')?.addEventListener('click', () => {
+        showSemester('sem1');
+        window.scrollTo({
+            top: document.getElementById('years').offsetTop - 80,
+            behavior: 'smooth'
+        });
+    });
+    
+    document.getElementById('facultyBtn')?.addEventListener('click', () => {
+        window.scrollTo({
+            top: document.getElementById('faculty').offsetTop - 80,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Header Scroll Effect
+    window.addEventListener('scroll', () => {
+        const scrollPosition = window.scrollY;
+        const header = document.querySelector('header');
+        header.style.backgroundColor = scrollPosition > 50 ? 
+            'rgba(15, 15, 26, 0.9)' : 'rgba(15, 15, 26, 0.5)';
+    });
+    
+    // Notes Search Functionality
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            document.querySelectorAll('.note-card').forEach(card => {
+                const textContent = card.textContent.toLowerCase();
+                card.style.display = textContent.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+    }
+});
+</script>
+<script>
+// Semester Tab Functionality
+function showSemester(semesterId) {
+    // Remove active class from all tabs
+    document.querySelectorAll('.year-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Remove active class from all content
+    document.querySelectorAll('.year-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    // Add active class to clicked tab
+    event.currentTarget.classList.add('active');
+    
+    // Show corresponding content
+    document.getElementById(semesterId).classList.add('active');
+}
+
+// Initialize first tab as active when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.year-tab').click();
+});
+</script>
+</body>
+</html>
